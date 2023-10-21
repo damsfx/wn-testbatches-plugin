@@ -1,0 +1,70 @@
+<div id="testbatchesCreate">
+    <?php if (!$this->fatalError): ?>
+
+        <?= Form::open(['id' => 'addBatches']) ?>
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="popup">&times;</button>
+                <h4 class="modal-title"><?= e(trans('hounddd.testbatches::lang.controllers.batches.create_batches')) ?></h4>
+            </div>
+
+            <div id="syncContainer">
+                <div class="modal-body">
+                    <p class="m-b-md">
+                        <?= trans('hounddd.testbatches::lang.controllers.batches.create_batches_header') ?>
+                    </p>
+
+                    <?= $createBatchesFormWidget->render() ?>
+
+                    <div class="loading-indicator-container" style="display:none;" id="syncloader">
+                        <div class="loading-indicator indicator-center">
+                            <span></span>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button
+                    class="btn btn-primary"
+                    type="submit"
+                    data-request="onCreateBatches"
+                    data-popup-load-indicator>
+                    <?= e(trans('backend::lang.form.create')) ?>
+                </button>
+
+                <button
+                    type="button"
+                    class="btn btn-default"
+                    data-dismiss="popup">
+                    <?= e(trans('backend::lang.form.close')) ?>
+                </button>
+            </div>
+        </form>
+
+        <script>
+            $('#testbatchesCreate').on('hide.oc.popup', function() {
+                // window.location.reload();
+            })
+        </script>
+
+    <?php else: ?>
+
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="popup">&times;</button>
+            <h4 class="modal-title"><?= e(trans('backend::lang.import_export.import_error')) ?></h4>
+        </div>
+        <div class="modal-body">
+            <p class="flash-message static error"><?= e($this->fatalError) ?></p>
+        </div>
+        <div class="modal-footer">
+            <button
+                type="button"
+                class="btn btn-default"
+                data-dismiss="popup">
+                <?= e(trans('backend::lang.form.close')) ?>
+            </button>
+        </div>
+
+    <?php endif ?>
+</div>

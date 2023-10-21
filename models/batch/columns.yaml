@@ -1,0 +1,38 @@
+# ===================================
+#  List Column Definitions
+# ===================================
+
+columns:
+    id:
+        label: 'hounddd.testbatches::lang.models.general.id'
+        searchable: true
+
+    batch:
+        label: 'hounddd.testbatches::lang.models.batch.progress'
+        type: partial
+
+    total_jobs:
+        label: 'hounddd.testbatches::lang.models.batch.total_jobs'
+    pending_jobs:
+        label: 'hounddd.testbatches::lang.models.batch.pending_jobs'
+    failed_jobs:
+        label: 'hounddd.testbatches::lang.models.batch.failed_jobs'
+
+    cancelled_at:
+        label: 'hounddd.testbatches::lang.models.general.cancelled_at'
+        type: datetime
+        searchable: true
+        sortable: true
+        invisible: true
+    created_at:
+        label: 'hounddd.testbatches::lang.models.general.created_at'
+        type: datetime
+        searchable: true
+        sortable: true
+        invisible: true
+    finished_at:
+        label: 'hounddd.testbatches::lang.models.general.finished_at'
+        type: datetime
+        searchable: true
+        sortable: true
+        # invisible: true

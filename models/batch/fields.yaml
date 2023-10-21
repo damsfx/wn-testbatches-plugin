@@ -1,0 +1,8 @@
+# ===================================
+#  Form Field Definitions
+# ===================================
+
+fields:
+    id:
+        label: 'hounddd.testbatches::lang.models.general.id'
+        disabled: true
