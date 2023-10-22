@@ -26,7 +26,6 @@ class FakeJob implements ShouldQueue
     {
         if ($this->batch()->cancelled()) {
             // Determine if the batch has been cancelled...
-
             return;
         }
 

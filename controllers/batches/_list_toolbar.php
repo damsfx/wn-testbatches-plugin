@@ -1,36 +1,20 @@
-<div data-control="toolbar">
-    <?php /*
+<div data-control="toolbar" class="loading-indicator-container">
     <a
-        href="<?= Backend::url('hounddd/testbatches/batches/create') ?>"
-        class="btn btn-primary wn-icon-plus">
-        <?= e(trans('backend::lang.form.create_title', ['name' => trans('hounddd.testbatches::lang.models.batch.label')])); ?>
+        role="button"
+        href="javascript:;"
+        data-request="onRefresh"
+        data-load-indicator="<?= e(trans('backend::lang.list.updating')) ?>"
+        class="btn btn-primary wn-icon-refresh">
+        <?= e(trans('backend::lang.list.refresh')) ?>
     </a>
 
-    <button
-        class="btn btn-danger wn-icon-trash-o"
-        disabled="disabled"
-        onclick="$(this).data('request-data', { checked: $('.control-list').listWidget('getChecked') })"
-        data-request="onDelete"
-        data-request-confirm="<?= e(trans('backend::lang.list.delete_selected_confirm')); ?>"
-        data-trigger-action="enable"
-        data-trigger=".control-list input[type=checkbox]"
-        data-trigger-condition="checked"
-        data-request-success="$(this).prop('disabled', 'disabled')"
-        data-stripe-load-indicator>
-        <?= e(trans('backend::lang.list.delete_selected')); ?>
-    </button>
-    */ ?>
-
-    <a role="button"
-        class="btn btn-warning"
+    <a
+        role="button"
+        href="javascript:;"
         data-control="popup"
         data-handler="onAskCreateFake"
-        <?php /*
-        data-request-data="items:5"
-        data-load-indicator="<?= e(trans('hounddd.webapp4you.sync.messages.request')) ?>"
-        */ ?>
-        href="javascript:;"
-        data-stripe-load-indicator>
+        data-stripe-load-indicator
+        class="btn btn-warning">
         <i class="icon-plus"></i>
         <?= e(trans('hounddd.testbatches::lang.controllers.batches.create_batches')); ?>
     </a>
