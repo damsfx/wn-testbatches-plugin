@@ -3,11 +3,13 @@
 # ===================================
 
 columns:
-    id:
-        label: 'hounddd.testbatches::lang.models.general.id'
+    # id:
+    #     label: 'hounddd.testbatches::lang.models.general.id'
+    #     searchable: true
+    name:
+        label: 'hounddd.testbatches::lang.models.general.name'
         searchable: true
-
-    batch:
+    progress:
         label: 'hounddd.testbatches::lang.models.batch.progress'
         type: partial
 

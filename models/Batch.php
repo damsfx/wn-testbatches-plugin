@@ -11,6 +11,11 @@ class Batch extends Model
     use \Winter\Storm\Database\Traits\Validation;
 
     /**
+     * @var \Illuminate\Bus\Batch|null Associated batch
+     */
+    protected \Illuminate\Bus\Batch|null $batch;
+
+    /**
      * @var string The database table used by the model.
      */
     public $table = 'job_batches';
@@ -75,8 +80,21 @@ class Batch extends Model
     public $attachOne = [];
     public $attachMany = [];
 
-    public function getBatchAttribute()
+
+    public function afterFetch()
     {
-        return Bus::findBatch($this->id);
+        $this->batch = Bus::findBatch($this->id);
+        debug($this->batch);
+    }
+
+
+    public function getProgressAttribute()
+    {
+        return $this->batch->progress();
+    }
+
+    public function getBatch()
+    {
+        return $this->batch;
     }
 }

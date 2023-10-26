@@ -1,0 +1,21 @@
+<?php
+    $progressCss = ($value > 0 and $value < 100 and $record->finished_at == null) ? 'active': '';
+
+    $barCss = '';
+
+    if (100 == $value) {
+        $barCss = 'progress-bar-success';
+    }
+    if ($record->failed_jobs >= 1) {
+        $barCss = $record->finished_at == null ? 'progress-bar-warning' : 'progress-bar-danger';
+    }
+
+    // debug($record);
+?>
+<div class="progress <?= $progressCss ?>" style="height:var(--progress-height, 18px);">
+    <div class="progress-bar <?= $barCss ?>" role="progressbar"
+        aria-valuenow="<?= $value ?>" aria-valuemin="0" aria-valuemax="100"
+        style="width: <?= $value ?>%;">
+        <span class="sr-only"><?= $value ?>% Complete</span>
+    </div>
+</div>

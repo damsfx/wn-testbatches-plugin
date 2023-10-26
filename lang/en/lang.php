@@ -15,6 +15,7 @@ return [
         ],
         'general' => [
             'id' => 'ID',
+            'name' => 'Name',
             'cancelled_at' => 'Canceled At',
             'created_at' => 'Created At',
             'finished_at' => 'Finished At',

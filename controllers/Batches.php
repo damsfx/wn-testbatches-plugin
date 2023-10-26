@@ -25,6 +25,7 @@ class Batches extends Controller
         BackendMenu::setContext('Hounddd.TestBatches', 'testbatches', 'batches');
 
         $this->addJs('$/hounddd/testbatches/assets/js/winter.bus.js', 'core');
+        $this->addCss('$/hounddd/testbatches/assets/css/winter.bus.css', 'core');
     }
 
     public function index()
