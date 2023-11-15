@@ -81,15 +81,4 @@ class Plugin extends PluginBase
             ],
         ];
     }
-
-    public function registerListColumnTypes()
-    {
-        return [
-            // Using an inline closure
-            'uppercase' => function($value) {
-                debug($value);
-                return strtoupper($value);
-            }
-        ];
-    }
 }

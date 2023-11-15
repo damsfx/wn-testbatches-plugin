@@ -84,7 +84,6 @@ class Batch extends Model
     public function afterFetch()
     {
         $this->batch = Bus::findBatch($this->id);
-        debug($this->batch);
     }
 
 
