@@ -1,22 +1,23 @@
-<div data-control="toolbar" class="loading-indicator-container">
-    <a
-        role="button"
-        href="javascript:;"
-        data-request="onRefresh"
-        data-load-indicator="<?= e(trans('backend::lang.list.updating')) ?>"
-        class="btn btn-primary wn-icon-refresh">
-        <?= e(trans('backend::lang.list.refresh')) ?>
-    </a>
-
-    <a
-        role="button"
-        href="javascript:;"
+<div data-control="toolbar">
+    <a role="button"
+        class="btn btn-warning"
         data-control="popup"
         data-handler="onAskCreateFake"
-        data-stripe-load-indicator
-        class="btn btn-warning">
+        <?php /*
+        data-request-data="items:5"
+        data-load-indicator="<?= e(trans('hounddd.webapp4you.sync.messages.request')) ?>"
+        */ ?>
+        href="javascript:;"
+        data-stripe-load-indicator>
         <i class="icon-plus"></i>
         <?= e(trans('hounddd.testbatches::lang.controllers.batches.create_batches')); ?>
     </a>
+
+    <button
+        class="btn btn-info"
+        data-request="onRefresh"
+        data-stripe-load-indicator>
+        Refresh
+    </button>
 
 </div>

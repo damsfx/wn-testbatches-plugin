@@ -25,19 +25,8 @@ class Batches extends Controller
         BackendMenu::setContext('Hounddd.TestBatches', 'testbatches', 'batches');
 
         $this->addJs('$/hounddd/testbatches/assets/js/winter.bus.js', 'core');
-        $this->addCss('$/hounddd/testbatches/assets/css/winter.bus.css', 'core');
     }
 
-    public function index()
-    {
-        //
-        // Do any custom code here
-        //
-        // $this->addJs('$/hounddd/testbatches/assets/js/winter.bus.js', 'Hounddd.TestBatches');
-
-        // Call the ListController behavior index() method
-        $this->asExtension('ListController')->index();
-    }
 
     public function index_onRefresh()
     {
@@ -62,6 +51,7 @@ class Batches extends Controller
         $createBatchesFormWidget = $this->makeFormWidget('Backend\Widgets\Form', $config);
         $createBatchesFormWidget->bindToController();
 
+        // $this->initForm($config->model);
         $this->vars['createBatchesFormWidget'] = $createBatchesFormWidget;
 
         return $this->makePartial('$/hounddd/testbatches/controllers/batches/_create_batches.htm');
