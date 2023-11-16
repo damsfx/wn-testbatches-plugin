@@ -20,4 +20,10 @@
         Refresh
     </button>
 
+    <div class="btn-group">
+        <div class="checkbox custom-checkbox">
+            <input name="autorefresh-batches-list" value="1" type="checkbox" id="autorefresh-batches-list" checked />
+            <label for="autorefresh-batches-list">Auto refresh list</label>
+        </div>
+    </div>
 </div>

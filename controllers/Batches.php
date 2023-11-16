@@ -30,6 +30,7 @@ class Batches extends Controller
 
     public function index_onRefresh()
     {
+        // debug('refresh list : '. date("Y-m-d H:i:s"));
         return $this->listRefresh();
     }
 
