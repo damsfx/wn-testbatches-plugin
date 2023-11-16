@@ -96,4 +96,23 @@ class Batch extends Model
     {
         return $this->batch;
     }
+
+
+    /**
+     * Scope a query to only include active users.
+     */
+    public function scopeHideCompleted($query, $value)
+    {
+        if ($value == 2) {
+            return $query->whereNull('finished_at');
+        }
+
+        if ($value == 1) {
+            return $query->whereNull('finished_at')
+                ->orWhere(function ($query) {
+                    $query->whereNotNull('finished_at')
+                        ->where('failed_jobs', '>', 0);
+                });
+        }
+    }
 }

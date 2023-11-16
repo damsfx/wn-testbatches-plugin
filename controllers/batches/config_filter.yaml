@@ -1,0 +1,11 @@
+# ===================================
+# Filter Scope Definitions
+# ===================================
+
+scopes:
+    hide_completed:
+        label: 'hounddd.testbatches::lang.controllers.batches.hide_completed'
+        type: switch
+        modelClass: Hounddd\TestBatches\Models\Batch
+        scope: hidecompleted
+        default: 1

@@ -1,4 +1,7 @@
 <?php
+    $batch = $record->getBatch();
+    // $value is the same as $batch->progress()
+
     $progressCss = ($value > 0 and $value < 100 and $record->finished_at == null) ? 'active': '';
 
     $barCss = '';
@@ -6,9 +9,13 @@
     if (100 == $value) {
         $barCss = 'progress-bar-success';
     }
+    $barCss = $record->cancelled_at != null ? 'progress-bar-warning' : $barCss;
+
     if ($record->failed_jobs >= 1) {
-        $barCss = $record->finished_at == null ? 'progress-bar-warning' : 'progress-bar-danger';
+        $barCss = $record->finished_at == null ? 'progress-bar-danger' : $barCss;
     }
+
+    // debug('progress', $value, $batch->progress());
 ?>
 <div class="progress <?= $progressCss ?>" style="height:var(--progress-height, 18px);">
     <div class="progress-bar <?= $barCss ?>" role="progressbar"

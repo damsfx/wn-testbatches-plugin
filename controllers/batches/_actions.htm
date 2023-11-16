@@ -1,0 +1,30 @@
+<?php
+    $batch = $record->getBatch();
+?>
+<div class="btn-group">
+    <!--
+    <button
+        type="button" class="btn btn-info"
+        title="<?= e(trans('hounddd.testbatches::lang.controllers.general.details')); ?>"
+        data-request="onShowDetails"
+        data-request-data="id: <?= $record->id ?>"
+    >
+        <i class="wn-icon-circle-info m-r-0 empty"></i>
+    </button>
+    -->
+    <?php if (!($batch->finished() && $batch->failedJobs == 0)): ?>
+    <button
+        type="button" class="btn btn-warning"
+        title="<?= e(trans('hounddd.testbatches::lang.controllers.general.cancel')); ?>"
+        data-request="onCancel"
+        data-request-data="batchId: '<?= $record->id ?>'"
+        disabled="disabled"
+        data-trigger-action="enable"
+        data-trigger=".toolbar-widget input[type=checkbox][id=autorefresh-batches-list]"
+        data-trigger-condition="unchecked"
+        data-stripe-load-indicator
+    >
+        <i class="wn-icon-ban empty"></i>
+    </button>
+    <?php endif ?>
+</div>

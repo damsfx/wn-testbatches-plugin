@@ -1,19 +1,19 @@
 <div id="testbatchesCreate">
     <?php if (!$this->fatalError): ?>
 
-        <?= Form::open(['id' => 'addBatches']) ?>
+        <?= Form::open(['id' => 'pruneBatches']) ?>
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="popup">&times;</button>
-                <h4 class="modal-title"><?= e(trans('hounddd.testbatches::lang.controllers.batches.create_batches_title')) ?></h4>
+                <h4 class="modal-title"><?= e(trans('hounddd.testbatches::lang.controllers.batches.pruning_title')) ?></h4>
             </div>
 
             <div id="syncContainer">
                 <div class="modal-body">
                     <p class="m-b-md">
-                        <?= trans('hounddd.testbatches::lang.controllers.batches.create_batches_header') ?>
+                        <?= trans('hounddd.testbatches::lang.controllers.batches.pruning_header') ?>
                     </p>
 
-                    <?= $createBatchesFormWidget->render() ?>
+                    <?= $pruneDelayFormWidget->render() ?>
 
                     <div class="loading-indicator-container" style="display:none;" id="syncloader">
                         <div class="loading-indicator indicator-center">
@@ -28,9 +28,9 @@
                 <button
                     class="btn btn-primary"
                     type="submit"
-                    data-request="onCreateBatches"
+                    data-request="onPrune"
                     data-popup-load-indicator>
-                    <?= e(trans('backend::lang.form.create')) ?>
+                    <?= e(trans('hounddd.testbatches::lang.controllers.general.prune')) ?>
                 </button>
 
                 <button

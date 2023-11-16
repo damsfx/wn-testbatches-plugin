@@ -1,15 +1,5 @@
-// Refresh list widget every second
-// setInterval(function () {
-//     $.request('onRefresh', {
-//         success: function () {
-//         },
-//     })
-// }, 5000);
-
-
-
 /*
- * Scripts for reordering in the Relation controller behavior.
+ * Scripts for batches behavior.
  */
 +function ($) {
     "use strict";
@@ -18,27 +8,44 @@
 
         this.autoRefresh = true;
 
-        this.initRefresh = function () {
+        this.refreshList = function () {
 
-            $.request('onRefresh', {
-                context: this,
-                success: function () {
-                },
-                complete: function () {
-                    if (this.autoRefresh) {
-                        var that = this;
-                        setTimeout(function(){ that.initRefresh() }, 2500);
-                    }
-                },
-                loading: $.wn.stripeLoadIndicator,
-            })
+            if (this.autoRefresh) {
+                $.request('onRefresh', {
+                    context: this,
+                    success: function () {
+                    },
+                    complete: function () {
+                        if (this.autoRefresh) {
+                            var that = this;
+                            setTimeout(function(){ that.refreshList() }, 5000);
+                        }
+                    },
+                    // loading: $.wn.stripeLoadIndicator,
+                })
+            }
+        }
+
+        this.toogleRefresh = function () {
+            this.autoRefresh = !this.autoRefresh;
+            this.refreshList();
         }
     }
 
     $.wn.BatchesBehavior = new BatchesBehavior;
 
     $(document).ready(function () {
-        $.wn.BatchesBehavior.initRefresh();
+        var $autoRefreshCheckbox = $('.toolbar-widget input[type=checkbox][id=autorefresh-batches-list]');
+
+        $autoRefreshCheckbox.on('click', function(){
+            $.wn.BatchesBehavior.toogleRefresh();
+        })
+
+        if (!$autoRefreshCheckbox.is(':checked')) {
+            $.wn.BatchesBehavior.autoRefresh = false;
+        }
+
+        $.wn.BatchesBehavior.refreshList();
     })
 
 }(window.jQuery);

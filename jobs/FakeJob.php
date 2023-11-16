@@ -5,6 +5,7 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Queue\Middleware\SkipIfBatchCancelled;
 use Illuminate\Queue\SerializesModels;
 
 class FakeJob implements ShouldQueue
@@ -24,12 +25,12 @@ class FakeJob implements ShouldQueue
      */
     public function handle(): void
     {
-        if ($this->batch()->cancelled()) {
-            // Determine if the batch has been cancelled...
-            return;
-        }
-
         // Fake delay
         usleep(50000);
+    }
+
+    public function middleware()
+    {
+        return [new SkipIfBatchCancelled()];
     }
 }

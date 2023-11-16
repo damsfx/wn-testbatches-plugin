@@ -4,6 +4,7 @@ use BackendMenu;
 use Backend\Classes\Controller;
 use Hounddd\TestBatches\Jobs\FakeJob;
 use Illuminate\Support\Facades\Bus;
+use Illuminate\Support\Facades\Artisan;
 
 /**
  * Batches Backend Controller
@@ -30,7 +31,7 @@ class Batches extends Controller
 
     public function index_onRefresh()
     {
-        // debug('refresh list : '. date("Y-m-d H:i:s"));
+        // debug('index_onRefresh: '. date("Y-m-d H:i:s"));
         return $this->listRefresh();
     }
 
@@ -69,6 +70,61 @@ class Batches extends Controller
             }
 
             $batch = Bus::batch($jobs)->dispatch();
+        }
+
+        return $this->listRefresh();
+    }
+
+
+    public function index_onAskPruneDelay()
+    {
+        $config = $this->makeConfig([
+            'fields' => [
+                'hours' => [
+                    'label' => 'hounddd.testbatches::lang.controllers.batches.pruning_delay',
+                    'type' => 'dropdown',
+                    'options' => [
+                        '12' => '12',
+                        '24' => '24',
+                        '48' => '48',
+                        '72' => '72',
+                    ],
+                    'default' => '48',
+                ],
+            ],
+        ]);
+
+        $config->alias           = 'pruneDelayForm';
+        $config->arrayName       = 'Batch';
+        $config->model           = new \Hounddd\TestBatches\Models\Batch();
+        $pruneDelayFormWidget = $this->makeFormWidget('Backend\Widgets\Form', $config);
+        $pruneDelayFormWidget->bindToController();
+
+        // $this->initForm($config->model);
+        $this->vars['pruneDelayFormWidget'] = $pruneDelayFormWidget;
+
+        return $this->makePartial('$/hounddd/testbatches/controllers/batches/_prune_delay.htm');
+    }
+
+    public function onPrune()
+    {
+        $hours = post('Batch.hours', 48);
+
+        Artisan::call('queue:prune-batches', [
+            '--hours' => $hours
+        ]);
+
+        return $this->listRefresh();
+    }
+
+
+    public function onCancel()
+    {
+        $batches = post('checked') ?? [post('batchId')];
+
+        foreach ($batches as $batchId) {
+            $batch = Bus::findBatch($batchId);
+            $batch->cancel();
         }
 
         return $this->listRefresh();
