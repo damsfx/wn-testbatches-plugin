@@ -5,19 +5,22 @@
     $progressCss = ($value > 0 and $value < 100 and $record->finished_at == null) ? 'active': '';
 
     $barCss = '';
+    $pendingJobs= $record->pending_jobs;
+    $failedJobs= $record->failed_jobs;
+    $cancelledAt= $record->cancelled_at;
 
-    if (100 == $value) {
+    if (100 == $value and $pendingJobs == 0) {
         $barCss = 'progress-bar-success';
     }
-    $barCss = $record->cancelled_at != null ? 'progress-bar-warning' : $barCss;
-
-    if ($record->failed_jobs >= 1) {
-        $barCss = $record->finished_at == null ? 'progress-bar-danger' : $barCss;
+    if ($cancelledAt != null and $pendingJobs != 0) {
+        $barCss = 'progress-bar-warning';
     }
-
-    // debug('progress', $value, $batch->progress());
+    if ($failedJobs != 0) {
+        $barCss = 'progress-bar-danger';
+    }
+    // debug($record);
 ?>
-<div class="progress <?= $progressCss ?>" style="height:var(--progress-height, 18px);">
+<div class="progress <?= $progressCss ?>">
     <div class="progress-bar <?= $barCss ?>" role="progressbar"
         aria-valuenow="<?= $value ?>" aria-valuemin="0" aria-valuemax="100"
         style="width: <?= $value ?>%;">
