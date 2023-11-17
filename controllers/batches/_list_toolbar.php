@@ -52,7 +52,7 @@
 
     <div class="btn-group">
         <div class="checkbox custom-checkbox">
-            <input name="autorefresh-batches-list" value="0" type="checkbox" id="autorefresh-batches-list" checked />
+            <input name="autorefresh-batches-list" value="0" type="checkbox" id="autorefresh-batches-list" />
             <label for="autorefresh-batches-list">Auto refresh list</label>
         </div>
     </div>
