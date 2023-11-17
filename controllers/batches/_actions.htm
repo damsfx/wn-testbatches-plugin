@@ -2,19 +2,16 @@
     $batch = $record->getBatch();
 ?>
 <div class="btn-group">
-    <!--
-    <button
-        type="button" class="btn btn-info"
+    <a class="btn btn-link"
+        href="<?= Backend::url('hounddd/testbatches/batches/infos') .'/'. $record->id ?>"
         title="<?= e(trans('hounddd.testbatches::lang.controllers.general.details')); ?>"
-        data-request="onShowDetails"
-        data-request-data="id: <?= $record->id ?>"
     >
         <i class="wn-icon-circle-info m-r-0 empty"></i>
-    </button>
-    -->
-    <?php if (!($batch->finished() && $batch->failedJobs == 0)): ?>
+    </a>
+
+    <?php if (!$batch->finished() && $batch->failedJobs == 0): ?>
     <button
-        type="button" class="btn btn-warning"
+        type="button" class="btn btn-link"
         title="<?= e(trans('hounddd.testbatches::lang.controllers.general.cancel')); ?>"
         data-request="onCancel"
         data-request-data="batchId: '<?= $record->id ?>'"

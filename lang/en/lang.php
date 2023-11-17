@@ -50,5 +50,8 @@ return [
                .'lighter. <br /><b>All finished batches that are more than this number of hours old will be pruned.</b>',
             'pruning_title' => 'Pruning batches',
         ],
+        'infos' => [
+            'title' => 'Batch infos'
+        ]
     ],
 ];

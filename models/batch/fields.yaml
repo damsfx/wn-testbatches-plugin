@@ -6,3 +6,6 @@ fields:
     id:
         label: 'hounddd.testbatches::lang.models.general.id'
         disabled: true
+    name:
+        label: 'hounddd.testbatches::lang.models.general.name'
+        searchable: true

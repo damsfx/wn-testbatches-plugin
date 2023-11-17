@@ -1,5 +1,6 @@
 <?php namespace Hounddd\TestBatches\Controllers;
 
+use Lang;
 use BackendMenu;
 use Backend\Classes\Controller;
 use Hounddd\TestBatches\Jobs\FakeJob;
@@ -128,5 +129,40 @@ class Batches extends Controller
         }
 
         return $this->listRefresh();
+    }
+
+    public function infos($recordId = null)
+    {
+        $config = $this->makeConfig([
+            'fields' => [
+                'hours' => [
+                    'label' => 'hounddd.testbatches::lang.controllers.batches.pruning_delay',
+                    'type' => 'dropdown',
+                    'options' => [
+                        '12' => '12',
+                        '24' => '24',
+                        '48' => '48',
+                        '72' => '72',
+                    ],
+                    'default' => '48',
+                ],
+            ],
+        ]);
+
+        $config->alias        = 'pruneDelayForm';
+        $config->arrayName    = 'Batch';
+        $config->model        = new \Hounddd\TestBatches\Models\Batch();
+        $pruneDelayFormWidget = $this->makeFormWidget(
+            'Backend\Widgets\Form',
+            $config
+        );
+        $pruneDelayFormWidget->bindToController();
+
+        // $this->initForm($config->model);
+        $this->vars['pruneDelayFormWidget'] = $pruneDelayFormWidget;
+        $this->vars['batch'] = Bus::findBatch($recordId);
+
+
+        $this->pageTitle = Lang::get('hounddd.testbatches::lang.controllers.infos.title');
     }
 }
