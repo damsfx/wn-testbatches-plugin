@@ -26,7 +26,7 @@
             }
         }
 
-        this.toogleRefresh = function () {
+        this.toggleRefresh = function () {
             this.autoRefresh = !this.autoRefresh;
             this.refreshList();
         }
@@ -38,7 +38,7 @@
         var $autoRefreshCheckbox = $('.toolbar-widget input[type=checkbox][id=autorefresh-batches-list]');
 
         $autoRefreshCheckbox.on('click', function(){
-            $.wn.BatchesBehavior.toogleRefresh();
+            $.wn.BatchesBehavior.toggleRefresh();
         })
 
         if (!$autoRefreshCheckbox.is(':checked')) {
