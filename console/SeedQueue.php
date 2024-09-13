@@ -1,4 +1,6 @@
-<?php namespace Hounddd\TestBatches\Console;
+<?php
+
+namespace Hounddd\TestBatches\Console;
 
 use Winter\Storm\Console\Command;
 

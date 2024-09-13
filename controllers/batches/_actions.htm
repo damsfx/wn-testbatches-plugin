@@ -24,4 +24,16 @@
         <i class="wn-icon-ban empty"></i>
     </button>
     <?php endif ?>
+
+    <?php if ($batch->finished() && $batch->failedJobs >= 1): ?>
+    <button
+        type="button" class="btn btn-link"
+        title="<?= e(trans('hounddd.testbatches::lang.controllers.batches.retry_failed_jobs')); ?>"
+        data-request="onRetryFailedJobs"
+        data-request-data="batchId: '<?= $record->id ?>'"
+        data-stripe-load-indicator
+    >
+        <i class="wn-icon-arrows-rotate empty"></i>
+    </button>
+    <?php endif ?>
 </div>

@@ -1,4 +1,6 @@
-<?php namespace Hounddd\TestBatches\Controllers;
+<?php
+
+namespace Hounddd\TestBatches\Controllers;
 
 use Backend;
 

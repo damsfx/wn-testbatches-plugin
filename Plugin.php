@@ -1,4 +1,6 @@
-<?php namespace Hounddd\TestBatches;
+<?php
+
+namespace Hounddd\TestBatches;
 
 use Backend;
 use Backend\Models\UserRole;

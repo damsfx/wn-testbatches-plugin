@@ -1,4 +1,6 @@
-<?php namespace Hounddd\TestBatches\Jobs;
+<?php
+
+namespace Hounddd\TestBatches\Jobs;
 
 use Illuminate\Bus\Batchable;
 use Illuminate\Bus\Queueable;
@@ -26,7 +28,7 @@ class FakeJob implements ShouldQueue
     public function handle(): void
     {
         // Fake delay
-        usleep(50000);
+        usleep(200000);
     }
 
     public function middleware()

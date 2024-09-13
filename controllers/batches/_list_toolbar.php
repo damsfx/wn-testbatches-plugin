@@ -3,7 +3,7 @@
         class="btn btn-primary"
         href="javascript:;"
         data-control="popup"
-        data-handler="onAskCreateFake"
+        data-handler="onCreateBatchesShowPopup"
         data-stripe-load-indicator>
         <i class="icon-plus"></i>
         <?= e(trans('hounddd.testbatches::lang.controllers.batches.create_batches_title')); ?>
@@ -51,7 +51,7 @@
     </button>
 
     <div class="btn-group">
-        <div class="checkbox custom-checkbox">
+        <div class="checkbox custom-checkbox m-b-0">
             <input name="autorefresh-batches-list" value="0" type="checkbox" id="autorefresh-batches-list" />
             <label for="autorefresh-batches-list">Auto refresh list</label>
         </div>
@@ -60,7 +60,7 @@
     <button
         class="btn btn-primary m-l-md"
         data-control="popup"
-        data-handler="onAskPruneDelay"
+        data-handler="onAskPruneDelayShowPopup"
         data-stripe-load-indicator
         disabled="disabled"
         data-trigger-action="enable"

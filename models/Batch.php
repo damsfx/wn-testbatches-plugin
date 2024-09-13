@@ -1,4 +1,6 @@
-<?php namespace Hounddd\TestBatches\Models;
+<?php
+
+namespace Hounddd\TestBatches\Models;
 
 use Illuminate\Support\Facades\Bus;
 use Model;
@@ -86,10 +88,23 @@ class Batch extends Model
         $this->batch = Bus::findBatch($this->id);
     }
 
-
-    public function getProgressAttribute()
+    /**
+     * Don't delete batches but mark them as cancelled
+     */
+    public function beforeDelete(): bool
     {
-        return $this->batch->progress();
+        $batch = Bus::findBatch($this->id);
+        if (!$batch) {
+            return false;
+        }
+
+        if ($batch->finished()) {
+            return true;
+        }
+
+        $batch->cancel();
+
+        return false;
     }
 
     public function getBatch()
@@ -114,5 +129,41 @@ class Batch extends Model
                         ->where('failed_jobs', '>', 0);
                 });
         }
+    }
+
+
+    public function getProgressAttribute()
+    {
+        return $this->batch->progress();
+    }
+
+    public function getIsRunningAttribute()
+    {
+        return ($this->batch->progress() > 0 && !$this->batch->finished());
+    }
+
+    public function getStatusAttribute()
+    {
+        $status = 'pending';
+
+        if ($this->batch->finished()) {
+            $status = 'finished';
+        }
+        if ($this->batch->cancelled()) {
+            $status = 'cancelled';
+        }
+        if ($this->batch->hasFailures()) {
+            $status = 'failed';
+        }
+        if ($this->getIsRunningAttribute()) {
+            $status = 'running';
+        }
+
+        return $status;
+    }
+
+    public function getStatusNameAttribute()
+    {
+        return trans('hounddd.testbatches::lang.models.general.statutes.' . $this->status);
     }
 }

@@ -1,11 +1,15 @@
-<?php namespace Hounddd\TestBatches\Controllers;
+<?php
 
-use Lang;
+namespace Hounddd\TestBatches\Controllers;
+
 use BackendMenu;
 use Backend\Classes\Controller;
 use Hounddd\TestBatches\Jobs\FakeJob;
-use Illuminate\Support\Facades\Bus;
+use Hounddd\TestBatches\Models\Batch;
+use Illuminate\Bus\BatchRepository;
 use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Bus;
+use Lang;
 
 /**
  * Batches Backend Controller
@@ -32,12 +36,11 @@ class Batches extends Controller
 
     public function index_onRefresh()
     {
-        // debug('index_onRefresh: '. date("Y-m-d H:i:s"));
         return $this->listRefresh();
     }
 
 
-    public function index_onAskCreateFake()
+    public function index_onCreateBatchesShowPopup()
     {
         $config = $this->makeConfig([
             'fields' => [
@@ -65,19 +68,21 @@ class Batches extends Controller
         $nbBatches = post('Batch.nb_batches');
 
         for ($n=1; $n <= $nbBatches; $n++) {
+            $nbJobs = rand(50, 100);
             $jobs = [];
-            for ($i=0; $i < 100; $i++) {
+
+            for ($i=1; $i <= $nbJobs; $i++) {
                 $jobs[] = new FakeJob();
             }
 
-            $batch = Bus::batch($jobs)->dispatch();
+            $batch = Bus::batch($jobs)->name('Batch-'. date("Ymd-His"))->dispatch();
         }
 
         return $this->listRefresh();
     }
 
 
-    public function index_onAskPruneDelay()
+    public function index_onAskPruneDelayShowPopup()
     {
         $config = $this->makeConfig([
             'fields' => [
@@ -85,6 +90,8 @@ class Batches extends Controller
                     'label' => 'hounddd.testbatches::lang.controllers.batches.pruning_delay',
                     'type' => 'dropdown',
                     'options' => [
+                        '0' => '0',
+                        '1' => '1',
                         '12' => '12',
                         '24' => '24',
                         '48' => '48',
@@ -112,7 +119,8 @@ class Batches extends Controller
         $hours = post('Batch.hours', 48);
 
         Artisan::call('queue:prune-batches', [
-            '--hours' => $hours
+            '--hours' => $hours,
+            '--cancelled' => 72,
         ]);
 
         return $this->listRefresh();
@@ -131,37 +139,20 @@ class Batches extends Controller
         return $this->listRefresh();
     }
 
+
+    public function onRetryFailedJobs()
+    {
+        $batchId = post('batchId');
+
+        Artisan::call('queue:retry-batch '. $batchId);
+
+        return $this->listRefresh();
+    }
+
+
     public function infos($recordId = null)
     {
-        $config = $this->makeConfig([
-            'fields' => [
-                'hours' => [
-                    'label' => 'hounddd.testbatches::lang.controllers.batches.pruning_delay',
-                    'type' => 'dropdown',
-                    'options' => [
-                        '12' => '12',
-                        '24' => '24',
-                        '48' => '48',
-                        '72' => '72',
-                    ],
-                    'default' => '48',
-                ],
-            ],
-        ]);
-
-        $config->alias        = 'pruneDelayForm';
-        $config->arrayName    = 'Batch';
-        $config->model        = new \Hounddd\TestBatches\Models\Batch();
-        $pruneDelayFormWidget = $this->makeFormWidget(
-            'Backend\Widgets\Form',
-            $config
-        );
-        $pruneDelayFormWidget->bindToController();
-
-        // $this->initForm($config->model);
-        $this->vars['pruneDelayFormWidget'] = $pruneDelayFormWidget;
-        $this->vars['batch'] = Bus::findBatch($recordId);
-
+        $this->vars['batch'] = Batch::where('id', $recordId)->firstOrFail();
 
         $this->pageTitle = Lang::get('hounddd.testbatches::lang.controllers.infos.title');
     }
