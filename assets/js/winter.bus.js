@@ -13,12 +13,15 @@
             if (this.autoRefresh) {
                 $.request('onRefresh', {
                     context: this,
-                    success: function () {
+                    success: function (data, textStatus, jqXHR) {
+                        for (var partial in data) {
+                            $(partial).html(data[partial]).trigger('ajaxUpdate', [this.context, data, textStatus, jqXHR])
+                        }
                     },
                     complete: function () {
                         if (this.autoRefresh) {
                             var that = this;
-                            setTimeout(function(){ that.refreshList() }, 5000);
+                            setTimeout(function(){ that.refreshList() }, 1000);
                         }
                     },
                     // loading: $.wn.stripeLoadIndicator,
